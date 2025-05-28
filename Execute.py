@@ -38,7 +38,7 @@ class GestorCuentasCobro:
         fecha_inicio = fecha_dt - relativedelta(months=1)
         texto = (
             f"{fecha_inicio.day} del mes de {meses[fecha_inicio.month]} del año {fecha_inicio.year} "
-            f"hasta el día {fecha_dt.day} del mes de {meses[fecha_dt.month]} del año {fecha_dt.year}."
+            f"hasta el día {fecha_dt.day} del mes de {meses[fecha_dt.month]} del año {fecha_dt.year}"
         )
         return fecha_dt.strftime("%Y-%m-%d"), texto
     
@@ -172,7 +172,7 @@ class GestorCuentasCobro:
         
         # Datos de la nueva cuenta de cobro
         numero_cuenta_doc = input("Número de cuenta de cobro: ")
-        fecha_input = input("Fecha (día/mes/año, ej: 1/06/2025): ")
+        fecha_input = input("Fecha (día/mes/año), ej: 1/06/2025: ")
         valor_numerico = input("Valor pagado numérico (sin puntos ni comas): ")
         valor_texto = input("Valor en texto (ej: un millón quinientos mil pesos): ")
         
