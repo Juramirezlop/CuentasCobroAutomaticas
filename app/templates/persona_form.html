@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}Registrar Persona{% endblock %}
+{% block content %}
+<div class="card">
+    <h2>Registrar Persona</h2>
+    <form method="post" action="/persona">
+        <label for="nombre_mio">Tu nombre completo</label>
+        <input type="text" id="nombre_mio" name="nombre_mio" required>
+
+        <label for="cedula">Cédula</label>
+        <input type="text" id="cedula" name="cedula" required>
+
+        <label for="lugar_cedula">Lugar de expedición</label>
+        <input type="text" id="lugar_cedula" name="lugar_cedula" required>
+
+        <label for="numero_cuenta">Número de cuenta</label>
+        <input type="text" id="numero_cuenta" name="numero_cuenta" required>
+
+        <label for="nombre_persona">Nombre del propietario de la cuenta</label>
+        <input type="text" id="nombre_persona" name="nombre_persona" required>
+
+        <label for="nombre_cuenta">Entidad bancaria</label>
+        <input type="text" id="nombre_cuenta" name="nombre_cuenta" required>
+
+        <button type="submit">Guardar Persona</button>
+    </form>
+</div>
+{% endblock %}

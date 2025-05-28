@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}Generar Cuenta de Cobro{% endblock %}
+{% block content %}
+<div class="card">
+    <h2>Generar Cuenta de Cobro</h2>
+    <form method="post" action="/cuenta">
+        <label for="persona_id">Selecciona una persona</label>
+        <select id="persona_id" name="persona_id" required>
+            {% for persona in personas %}
+            <option value="{{ persona.id }}">{{ persona.nombre_mio }} ({{ persona.cedula }})</option>
+            {% endfor %}
+        </select>
+
+        <label for="fecha">Fecha de la cuenta</label>
+        <input type="date" id="fecha" name="fecha" required>
+
+        <label for="valor_numerico">Valor pagado</label>
+        <input type="text" id="valor_numerico" name="valor_numerico" required>
+
+        <label for="valor_texto">Valor pagado en letras</label>
+        <input type="text" id="valor_texto" name="valor_texto" required>
+
+        <button type="submit">Generar PDF</button>
+    </form>
+</div>
+{% endblock %}

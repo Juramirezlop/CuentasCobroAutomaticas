@@ -1,0 +1,102 @@
+\documentclass[11pt,a4paper]{article}
+
+%— Paquetes básicos y codificación —
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish]{babel}
+\usepackage[a4paper,margin=2cm]{geometry}
+\usepackage{lmodern}
+\usepackage{microtype}      % para mejor tipografía
+
+%— Colores y cajas —
+\usepackage{xcolor}
+\definecolor{companyBlue}{HTML}{0A3D62}
+\definecolor{lightGray}{gray}{0.95}
+
+\usepackage{mdframed}       % cajas con estilo
+\mdfdefinestyle{amountbox}{
+  backgroundcolor=lightGray,
+  linecolor=companyBlue,
+  linewidth=1pt,
+  leftmargin=0cm, rightmargin=0cm,
+  innertopmargin=6pt, innerbottommargin=6pt,
+  innerrightmargin=8pt, innerleftmargin=8pt
+}
+
+%— Cabecera y pie de página —
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\textbf{\large CUENTA DE COBRO \# (((numero_cuenta_doc))) }}
+\fancyhead[R]{\small (((lugar_cedula))), (((fecha)))}
+\renewcommand{\headrulewidth}{1pt}
+\renewcommand{\headrule}{\hbox to\headwidth{%
+  \color{companyBlue}\leaders\hrule height \headrulewidth\hfill}}
+
+\fancyfoot[C]{\thepage}
+
+%— Espaciado —
+\usepackage{setspace}
+\onehalfspacing
+
+\begin{document}
+
+\vspace*{1cm}
+
+%— Título principal —
+\begin{center}
+  {\LARGE\bfseries COLOMBIAN COMPANY GROUP SAS}\\[4pt]
+  {\small\scshape NIT: 901447449-0}
+\end{center}
+
+\vspace{1cm}
+
+%— Datos del cliente —
+\noindent
+\begin{tabular}{@{}p{0.15\textwidth} p{0.8\textwidth}@{}}
+\textbf{DEBE A:} & \textbf{(((nombre_mio)))} \\
+\textbf{C.C.:}   & (((cedula))) (((lugar_cedula))) \\[6pt]
+\end{tabular}
+
+\vspace{0.8cm}
+
+%— Monto destacado —
+\begin{mdframed}[style=amountbox]
+  \textbf{La suma de} \hfill {\LARGE \$\,(((valor_numerico)))} \\
+  \textit{(((valor_texto))) m/cte}
+\end{mdframed}
+
+
+\vspace{0.8cm}
+
+%— Concepto de servicios —
+\noindent
+\textbf{Por concepto de:}\\
+Servicios contables correspondientes al dia (((periodo))).
+
+\vspace{1cm}
+
+%— Instrucciones de pago en dos columnas —
+\noindent
+\begin{minipage}{0.6\textwidth}
+  Favor consignar en cuenta de ahorros (((nombre_cuenta))):\\
+  \textbf{No. (((numero_cuenta)))}\\
+  A nombre de (((nombre_persona))).
+\end{minipage}
+
+\hfill
+
+\vspace{2cm}
+
+%— Firma y cierre —
+\noindent
+Cordialmente,\\[1.5cm]
+\noindent
+\begin{tabular}{@{}p{6.5cm}@{}p{6.5cm}@{}}
+\cline{1-1}
+ & \\
+\textbf{(((nombre_mio)))} & \\
+C.C. (((cedula))) (((lugar_cedula))) &
+\end{tabular}
+
+\end{document}

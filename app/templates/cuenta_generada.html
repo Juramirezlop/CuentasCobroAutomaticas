@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}Cuenta Generada{% endblock %}
+{% block content %}
+<div class="card">
+    <h2>Cuenta generada con éxito</h2>
+    <p>Haz clic en el botón para descargar el PDF generado.</p>
+    <a href="/static/pdf/{{ filename }}" target="_blank">
+        <button>Descargar PDF</button>
+    </a>
+    <br><br>
+    <a href="/cuenta">Crear otra cuenta</a> |
+    <a href="/cuentas">Ver mis cuentas</a>
+</div>
+{% endblock %}

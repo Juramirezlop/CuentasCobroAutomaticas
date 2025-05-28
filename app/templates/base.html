@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Sistema de Cuentas de Cobro{% endblock %}</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <h1>Sistema de Cuentas de Cobro</h1>
+        <nav>
+            <a href="/">Inicio</a>
+            <a href="/persona">Registrar Persona</a>
+            <a href="/cuenta">Generar Cuenta</a>
+        </nav>
+    </header>
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+    <footer>
+        <p>&copy; 2025 - Proyecto Local</p>
+    </footer>
+</body>
+</html>
