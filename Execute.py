@@ -97,17 +97,12 @@ class GestorCuentasCobro:
         lugar_cedula = input("Lugar de expedición de la cédula: ")
         nombre_cuenta = input("Nombre del banco: ")
         numero_cuenta = input("Número de cuenta: ")
-        
-        # Datos de la cuenta de cobro
-        numero_cuenta_doc = input("Número de cuenta de cobro: ")
         fecha_input = input("Fecha (día/mes/año, ej: 1/06/2025): ")
         valor_numerico = input("Valor pagado numérico (sin puntos ni comas): ")
         valor_texto = input("Valor en texto (ej: un millón quinientos mil pesos): ")
-        
-        # Procesar fecha y periodo
         fecha_iso, periodo = self.formatear_periodo(fecha_input)
+        numero_cuenta_doc = "1"
         
-        # Insertar datos
         self.insertar_cuenta_cobro({
             "numero_cuenta_doc": numero_cuenta_doc,
             "lugar_cedula": lugar_cedula,
@@ -159,6 +154,25 @@ class GestorCuentasCobro:
         """, (nombre_mio,))
         
         datos_bancarios = self.cursor.fetchone()
+
+        self.cursor.execute("""
+            SELECT MAX(CAST(numero_cuenta_doc AS INTEGER))
+            FROM cuentas_cobro 
+            WHERE nombre_mio ILIKE %s 
+            AND numero_cuenta_doc::text ~ '^[0-9]+$'
+        """, (nombre_mio,))
+        
+        # self.cursor.execute("""
+        #     SELECT MAX(numero_cuenta_doc)
+        #     FROM cuentas_cobro 
+        #     WHERE nombre_mio ILIKE %s 
+        #     AND numero_cuenta_doc IS NOT NULL
+        # """, (nombre_mio,))
+
+        ultimo_numero = self.cursor.fetchone()[0]
+        siguiente_numero = (ultimo_numero + 1) if ultimo_numero else 1
+
+        numero_cuenta_doc = str(siguiente_numero)
         nombre_cuenta, numero_cuenta = datos_bancarios if datos_bancarios else ("", "")
         
         print(f"\nUsuario seleccionado: {nombre_mio}")
@@ -171,7 +185,6 @@ class GestorCuentasCobro:
             numero_cuenta = input("Nuevo número de cuenta: ")
         
         # Datos de la nueva cuenta de cobro
-        numero_cuenta_doc = input("Número de cuenta de cobro: ")
         fecha_input = input("Fecha (día/mes/año), ej: 1/06/2025: ")
         valor_numerico = input("Valor pagado numérico (sin puntos ni comas): ")
         valor_texto = input("Valor en texto (ej: un millón quinientos mil pesos): ")
@@ -209,7 +222,7 @@ class GestorCuentasCobro:
         self.cursor.execute("""
             SELECT id, numero_cuenta_doc, fecha, valor_numerico
             FROM cuentas_cobro
-            WHERE nombre_mio = %s
+            WHERE nombre_mio ILIKE %s
             ORDER BY fecha DESC
         """, (nombre_mio,))
         
@@ -326,7 +339,7 @@ class GestorCuentasCobro:
         self.cursor.execute("""
             SELECT id, numero_cuenta_doc, fecha, valor_numerico
             FROM cuentas_cobro
-            WHERE nombre_mio = %s
+            WHERE nombre_mio ILIKE %s
             ORDER BY fecha DESC
         """, (nombre,))
         
@@ -338,8 +351,8 @@ class GestorCuentasCobro:
         
         # Mostrar listado de cuentas
         print("\nCuentas disponibles:")
-        for i, (id_cuenta, num_doc, fecha, valor) in enumerate(registros):
-            print(f"{i + 1}. ID #{id_cuenta} | N° {num_doc} | Fecha: {fecha} | Valor: ${valor:,}")
+        for i, (id, num_doc, fecha, valor) in enumerate(registros):
+            print(f"{i + 1}. N° {num_doc} | ID#: {id} | Fecha: {fecha} | Valor: ${valor:,}")
         
         # Elegir una cuenta
         try:
@@ -379,7 +392,7 @@ class GestorCuentasCobro:
             
             # Compilar usando Tectonic
             result = subprocess.run(["tectonic", "--outdir=PDF", archivo_tex], 
-                                  capture_output=True, text=True)
+                                    capture_output=True, text=True)
             
             if result.returncode == 0:
                 # Eliminar .tex temporal
